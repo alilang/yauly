@@ -30,7 +30,8 @@ public class Split {
 				textSize++;
 			}
 		}
-		System.out.println("文章总字数："+textSize);
+		
+		System.out.println("book size count:"+textSize);
 		fr.close();
 		br.close();
 		fr = new FileReader(filePath);
@@ -38,14 +39,13 @@ public class Split {
 		bw.write("文章总字数："+textSize+"\n\n");
 		while(br.read(buf)>0){
 			bw.write(buf);
-			//System.out.print(buf[0]);
 			if(buf[0]>=0x4E00 && buf[0]<=0X9FA5){
 				totalCount++;
 				if(totalCount%splitSize==0){
 					bw.write('\n');
 					bw.write('\n');
-					bw.write("==>(您已阅读 "+totalCount+" 字,进度："+(totalCount*100)/(double)textSize+"%)");
-					System.out.println("==>(您已阅读 "+totalCount+" 字,进度："+(totalCount*100)/(double)textSize+"%)");
+					bw.write("<!-- (您已阅读 "+totalCount+" 字,进度："+(totalCount*100)/(double)textSize+"%) -->");
+					System.out.println("==>(you have read "+totalCount+" characters,progress:"+(totalCount*100)/(double)textSize+"%)");
 					bw.write('\n');
 					bw.write('\n');
 				}
@@ -54,11 +54,8 @@ public class Split {
 		bw.write('\n');
 		bw.write('\n');
 		bw.write("您已阅读 "+totalCount+" 字,全书已读完！");
-		System.out.println("您已阅读 "+totalCount+" 字,全书已读完！");
+		System.out.println("you have read "+totalCount+" characters,done !");
 		fr.close();
 		bw.close();
 	}
-	
-	
-
 }
