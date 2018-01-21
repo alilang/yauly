@@ -1,6 +1,5 @@
 package com.mg.mf;
 
-import java.util.Date;
 import java.util.Random;
 
 public class AutoReader {
@@ -24,18 +23,8 @@ public class AutoReader {
     }
     
     public static void main(String[] args) throws Exception{
-        // TODO Auto-generated method stub
-        long startTime = System.currentTimeMillis();
         while(true)
         {
-            int sleepTime = getRandom(20, 40);
-            sleepTime = 1000*sleepTime + getRandom(0, 1000);
-            //System.out.println("Read " + sleepTime + " miliseconds");
-            Thread.sleep(sleepTime);
-            if(new Date().getHours()<5)
-            {
-                //continue;
-            }
             int startX = getRandom(startX1, startX2);
             int startY = getRandom(startY1, endY2);
             
@@ -43,18 +32,16 @@ public class AutoReader {
             int endY = getRandom(endY1, endY2);
             
             String cmd = String.format("adb shell input swipe %d %d %d %d", startX, startY, endX, endY);
-            //System.out.println(cmd);
+            System.out.println(cmd);
             try {
                 Runtime.getRuntime().exec(cmd);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
-                //e.printStackTrace();
+                e.printStackTrace();
             }
-            long endTime = System.currentTimeMillis();
-            //System.out.println("minutes: " + (endTime - startTime)/60000);
+            int sleepTime = getRandom(20, 40);
+            sleepTime = 1000*sleepTime + getRandom(0, 1000);
+            Thread.sleep(sleepTime);
         }
-        
-
     }
 
 }

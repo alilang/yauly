@@ -39,7 +39,7 @@ public class AutoClick {
             Double y = Double.valueOf(location[1]);
             Double z = Math.sqrt(x*x + y*y);
             System.out.println("length:" + z);
-            int time = (int)(z*4 + 50);
+            int time = (int)(z*4 + 45);
             
             String cmd = String.format("adb shell input swipe %d %d %d %d %d", startX, startY, endX, endY, time);
             System.out.println(cmd);
