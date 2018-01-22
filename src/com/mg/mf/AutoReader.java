@@ -1,6 +1,11 @@
 package com.mg.mf;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AutoReader {
 
@@ -23,15 +28,57 @@ public class AutoReader {
     }
     
     public static void main(String[] args) throws Exception{
+        
+        int width = 0;
+        int height = 0;
+        try{
+            InputStream is = Runtime.getRuntime().exec("adb shell wm size").getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line = br.readLine();
+            System.out.println(line);
+            br.close();
+            is.close();
+            Pattern p = Pattern.compile("[0-9]+");   
+            Matcher m = p.matcher(line);
+            if(m.find())
+            {
+                width = Integer.valueOf(m.group(0));
+            }
+            if(m.find()){
+                height = Integer.valueOf(m.group(0));
+            }
+            
+            System.out.println(String.format("screen width:%d, height:%d", width, height));
+            
+            if(width > 0 && height > 0)
+            {
+                startX1 = (startX1*width)/1080;
+                startX2 = (startX2*width)/1080;
+                endX1 = (endX1*width)/1080;
+                endX2 = (endX2*width)/1080;
+                
+                startY1 = (startY1*height)/1920;
+                startY2 = (startY2*height)/1920;
+                endY1 = (endY1*height)/1920;
+                endY2 = (endY2*height)/1920;
+            }
+            
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
         while(true)
         {
             int startX = getRandom(startX1, startX2);
-            int startY = getRandom(startY1, endY2);
+            int startY = getRandom(startY1, startY2);
             
             int endX = getRandom(endX1, endX2);
             int endY = getRandom(endY1, endY2);
             
-            String cmd = String.format("adb shell input swipe %d %d %d %d", startX, startY, endX, endY);
+            int dual = getRandom(250, 400);
+            
+            String cmd = String.format("adb shell input swipe %d %d %d %d %d", startX, startY, endX, endY, dual);
             System.out.println(cmd);
             try {
                 Runtime.getRuntime().exec(cmd);
