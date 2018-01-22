@@ -28,7 +28,7 @@ public class AutoReader {
     }
     
     public static void main(String[] args) throws Exception{
-        
+        //adb shell dumpsys window  | find "init="
         int width = 0;
         int height = 0;
         try{
@@ -50,6 +50,13 @@ public class AutoReader {
             
             System.out.println(String.format("screen width:%d, height:%d", width, height));
             
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        while(true)
+        {
             if(width > 0 && height > 0)
             {
                 startX1 = (startX1*width)/1080;
@@ -62,14 +69,6 @@ public class AutoReader {
                 endY1 = (endY1*height)/1920;
                 endY2 = (endY2*height)/1920;
             }
-            
-        }catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        
-        while(true)
-        {
             int startX = getRandom(startX1, startX2);
             int startY = getRandom(startY1, startY2);
             
