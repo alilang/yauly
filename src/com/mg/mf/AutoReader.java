@@ -28,7 +28,7 @@ public class AutoReader {
     }
     
     public static void main(String[] args) throws Exception{
-        //use this comant to get screen size
+        //use this comant to get screen size 
         //adb shell dumpsys window  | find "init="
         int width = 0;
         int height = 0;
